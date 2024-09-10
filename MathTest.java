@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -8,10 +9,23 @@ public class MathTest {
     public static void main(String[] args){
 
         Scanner scanner = new Scanner(System.in); 
+        int int_num_questions = 0;
 
-        System.out.println("How many questions do you want?");
-        int int_num_questions = Integer.valueOf(scanner.nextLine());
-        System.out.print("\n");
+        do {
+            System.out.println("How many questions do you want?");
+            if(scanner.hasNextInt()) {
+                int_num_questions = scanner.nextInt();
+                System.out.print("\n");     
+                break;       
+            }
+            else {
+                System.out.println("Input a valid value.");
+                scanner.nextLine();
+                System.out.print("\n");
+            }
+        } while (true);
+
+        System.out.println("Input all your answers to 2 decimal places.\n\nGoodluck!\n");
 
         double correct_answers = 0;
 
@@ -20,17 +34,32 @@ public class MathTest {
             String question = qa.getQuestion();
             double answer = qa.getAnswer();
 
-            System.out.println("Q" + i + ": " + question);
-            String user_ans = scanner.nextLine();
-            
-            String formattedAnswer = String.format("%.2f", answer);
+            double user_ans = 0;
 
-            if (Double.parseDouble(user_ans) == Double.parseDouble(formattedAnswer)){
+            do {
+                System.out.println("Q" + i + ": " + question);
+                if(scanner.hasNextDouble()) {
+                    user_ans = scanner.nextDouble();
+                    System.out.print("\n");     
+                    break;       
+                }
+                else {
+                    System.out.println("Input a valid value.");
+                    scanner.nextLine();
+                    System.out.print("\n");
+                }
+            } while (true);
+
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            String formattedAnswer = decimalFormat.format(answer);
+            String formattedUserAnswer = decimalFormat.format(user_ans);
+
+            if (formattedAnswer.equals(formattedUserAnswer)){
                 correct_answers++;
                 System.out.println("Correct!\n");
             }
             else{
-                System.out.println(user_ans + " is incorrect. The correct answer was: " + answer + "\n");
+                System.out.printf(formattedUserAnswer + " is incorrect. The correct answer was: "+ formattedAnswer + "\n");
             }
         }
         double grade = correct_answers/int_num_questions * 100;
@@ -65,8 +94,8 @@ public class MathTest {
 
         Random rand = new Random();
 
-        double val1 = rand.nextInt(500);
-        double val2 = rand.nextInt(500);
+        int val1 = rand.nextInt(500);
+        int val2 = rand.nextInt(500);
         String question = "";
         double answer = 0.00;
 
@@ -84,7 +113,9 @@ public class MathTest {
         }
         else if (randomOperator == "/"){
             question = val1 + " / " + val2 + " = ?";
-            answer = val1 / val2;
+            answer = (double)val1 / val2;
+            String formattedAnswer = String.format("%.2f", answer);
+            answer = Double.valueOf(formattedAnswer);
         }
 
         return new QuestionAnswer(question, answer);
