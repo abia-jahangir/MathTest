@@ -39,7 +39,7 @@ public class MathTest {
             System.out.printf("Better luck next time... You got %.2f%%.", grade);
         }
         else if ((grade >= 50) && (grade <= 75)){
-            System.out.printf("Keep working harf! You got %.2f%%.", grade);
+            System.out.printf("Keep working hard! You got %.2f%%.", grade);
         }
         else if (grade > 75 && grade <100){
             System.out.printf("Great! You got %.2f%%.", grade);
@@ -109,4 +109,3 @@ public class MathTest {
     }
 
 }
-//yello!
